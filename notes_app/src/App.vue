@@ -4,6 +4,11 @@
     <!-- <ExpenseTracker /> -->
     <h1>{{ taskStore.name }}</h1>
 
+    <!-- new task form -->
+    <div class="new-task-form">
+      <TaskForm />
+    </div>
+
     <!-- filter -->
     <nav class="filter">
       <button @click="filter = 'all'">All tasks</button>
@@ -34,8 +39,9 @@ import TaskDetails from "./components/TaskDetails.vue";
 import { useTaskStore } from "./stores/TaskStore";
 import { ref } from "vue";
 import TaskDetailsVue from "./components/TaskDetails.vue";
+import TaskForm from "./components/TaskForm.vue";
 export default {
-  components: { TaskDetails },
+  components: { TaskDetails, TaskForm },
   setup() {
     const taskStore = useTaskStore();
     const filter = ref("all");
@@ -100,6 +106,34 @@ body {
   padding: 4px 8px;
   cursor: pointer;
   font-size: 0.8em;
+  font-size: 1em;
+}
+/* new task form */
+.new-task-form {
+  background: #e7e7e7;
+  padding: 20px 0;
+}
+form {
+  max-width: 400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 10px;
+}
+form button {
+  background: #ffd859;
+  border: 0;
+  padding: 10px;
+  font-family: "Poppins";
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+}
+form input {
+  border: 0;
+  padding: 10px;
+  border-radius: 6px;
+  color: #555;
   font-size: 1em;
 }
 </style>
