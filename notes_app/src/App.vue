@@ -2,7 +2,7 @@
   <div>
     <!-- <NotesComponent /> -->
     <!-- <ExpenseTracker /> -->
-    <h1>{{ taskStore.name }}</h1>
+    <h1>{{ name }}</h1>
 
     <!-- new task form -->
     <div class="new-task-form">
@@ -15,19 +15,24 @@
       <button @click="filter = 'favs'">Favs tasks</button>
     </nav>
 
+    <!-- loading -->
+    <div class="loading" v-if="loading">Loading tasks....</div>
+
     <!-- task list -->
     <div class="task-list" v-if="filter === 'all'">
-      <p>You're have {{ taskStore.totalCount }} task left to do</p>
-      <div v-for="task1 in taskStore.tasks" :key="task1">
+      <p>You're have {{ totalCount }} task left to do</p>
+      <div v-for="task1 in tasks" :key="task1">
         <TaskDetails :task="task1" />
       </div>
     </div>
     <div class="task-list" v-if="filter === 'favs'">
-      <p>You're have {{ taskStore.favCount }} Favs left to do</p>
-      <div v-for="task1 in taskStore.favs" :key="task1">
+      <p>You're have {{ favCount }} Favs left to do</p>
+      <div v-for="task1 in tfavs" :key="task1">
         <TaskDetails :task="task1" />
       </div>
     </div>
+
+    <button @click="taskStore.$reset">reset state</button>
   </div>
 </template>
 
@@ -40,12 +45,19 @@ import { useTaskStore } from "./stores/TaskStore";
 import { ref } from "vue";
 import TaskDetailsVue from "./components/TaskDetails.vue";
 import TaskForm from "./components/TaskForm.vue";
+import { storeToRefs } from "pinia";
 export default {
   components: { TaskDetails, TaskForm },
   setup() {
     const taskStore = useTaskStore();
+
+    const { tasks, loading, favs, totalCount, favCount } =
+      storeToRefs(taskStore);
+
+    //fetch tasks
+    taskStore.getTasks();
     const filter = ref("all");
-    return { taskStore, filter };
+    return { taskStore, filter, tasks, loading, favs, totalCount, favCount };
   },
 };
 </script>
@@ -89,6 +101,9 @@ body {
   margin-left: 6px;
   cursor: pointer;
   color: #bbb;
+}
+.task i.active {
+  color: #ff005d;
 }
 
 /* filter nav */
@@ -135,5 +150,16 @@ form input {
   border-radius: 6px;
   color: #555;
   font-size: 1em;
+}
+
+/* loading state */
+.loading {
+  max-width: 640px;
+  border: 1px solid #ffd859;
+  background: #ffe9a0;
+  color: #3a3a3a;
+  padding: 5px 0;
+  text-align: center;
+  margin: 30px auto;
 }
 </style>

@@ -1,8 +1,9 @@
 <template>
   <div>
-    <form @submit.prevent="handleSubmit"></form>
-    <input type="text" placeholder="I need to..." v-model="newTask" />
-    <button @click="handleSubmit">Add</button>
+    <form @submit.prevent="handleSubmit">
+      <input type="text" placeholder="I need to..." v-model="newTask" />
+      <button>Add</button>
+    </form>
   </div>
 </template>
 
@@ -16,7 +17,6 @@ export default {
 
     const handleSubmit = () => {
       if (newTask.value.length > 0) {
-        console.log("zensi");
         taskStore.addTask({
           title: newTask.value,
           isFav: false,
