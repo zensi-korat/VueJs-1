@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <NotesComponent /> -->
+    <NotesComponent />
     <!-- <ExpenseTracker /> -->
     <h1>{{ name }}</h1>
 
@@ -34,11 +34,13 @@
 
     <button @click="taskStore.$reset">reset state</button>
   </div>
+  <ProvideComponent />
 </template>
 
 <script>
 import TaskDetails from "./components/TaskDetails.vue";
-// import NotesComponent from "./components/NotesComponent.vue";
+import NotesComponent from "./components/NotesComponent.vue";
+import ProvideComponent from "./components/Provide.vue";
 // import ExpenseTracker from "./components/ExpenseTracker/ExpenseTracker.vue";
 
 import { useTaskStore } from "./stores/TaskStore";
@@ -50,7 +52,8 @@ export default {
   components: { TaskDetails, TaskForm },
   setup() {
     const taskStore = useTaskStore();
-
+    const message = "this is prop drilling";
+    provide("message", message);
     const { tasks, loading, favs, totalCount, favCount } =
       storeToRefs(taskStore);
 

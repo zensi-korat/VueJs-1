@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
-import TeamsList from "../components/teams/TeamsList.vue";
-import UsersList from "../components/users/UsersList.vue";
+import TeamsList from "../pages/TeamsList.vue";
+import UsersList from "../pages/UsersList.vue";
 import TeamMembers from "../components/teams/TeamMembers.vue";
-import NotFound from "../components/nav/NotFound.vue";
-import TeamsFooter from "../components/teams/TeamFooter.vue";
-import UsersFooter from "../components/users/UserFooter.vue";
+import NotFound from "../pages/NotFound.vue";
+import TeamsFooter from "../pages/TeamFooter.vue";
+import UsersFooter from "../pages/UserFooter.vue";
 
 const routes = [
   // { path: "/", redirect: "/teams" },
