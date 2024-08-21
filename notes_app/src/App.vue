@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NotesComponent />
+    <!-- <NotesComponent /> -->
     <!-- <ExpenseTracker /> -->
     <h1>{{ name }}</h1>
 
@@ -33,36 +33,41 @@
     </div>
 
     <button @click="taskStore.$reset">reset state</button>
+    <h1>dfgh</h1>
+    <ProvideComponent />
   </div>
-  <ProvideComponent />
 </template>
 
-<script>
+<script setup>
 import TaskDetails from "./components/TaskDetails.vue";
-import NotesComponent from "./components/NotesComponent.vue";
-import ProvideComponent from "./components/Provide.vue";
+// import NotesComponent from "./components/NotesComponent.vue";
 // import ExpenseTracker from "./components/ExpenseTracker/ExpenseTracker.vue";
 
 import { useTaskStore } from "./stores/TaskStore";
-import { ref } from "vue";
-import TaskDetailsVue from "./components/TaskDetails.vue";
+import { ref, provide } from "vue";
+// import TaskDetailsVue from "./components/TaskDetails.vue";
 import TaskForm from "./components/TaskForm.vue";
 import { storeToRefs } from "pinia";
-export default {
-  components: { TaskDetails, TaskForm },
-  setup() {
-    const taskStore = useTaskStore();
-    const message = "this is prop drilling";
-    provide("message", message);
-    const { tasks, loading, favs, totalCount, favCount } =
-      storeToRefs(taskStore);
+import ProvideComponent from "./components/ProvideComponent.vue";
 
-    //fetch tasks
-    taskStore.getTasks();
-    const filter = ref("all");
-    return { taskStore, filter, tasks, loading, favs, totalCount, favCount };
-  },
-};
+const taskStore = useTaskStore();
+const { tasks, loading, favs, totalCount, favCount } = storeToRefs(taskStore);
+
+//------------>    provide/inject with string
+const message = "this is String message";
+provide("message", message);
+
+//----------->    provide/inject with reactive value
+const searchText = ref("Hello this is a reactive value");
+function updateSearchText() {
+  searchText.value = "Updated value from parent";
+}
+
+provide("reactiveValue", { searchText, updateSearchText });
+
+//fetch tasks
+taskStore.getTasks();
+const filter = ref("all");
 </script>
 
 <style>
