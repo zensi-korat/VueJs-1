@@ -18,7 +18,10 @@
   </div>
   <input type="text" ref="input" />
   <h4 ref="title">Life cycle hooks</h4>
-  <h4>{{ number }}</h4>
+  <!-- <h4>{{ number }}</h4> -->
+  <button @click="number++">Increment by one</button>
+
+  <ComponentC />
 </template>
 
 <script setup>
@@ -30,6 +33,7 @@ import {
   onUpdated,
   ref,
 } from "vue";
+import ComponentC from "./ComponentC";
 
 const { searchText, updateSearchText } = inject("reactiveValue");
 const stringMsg = inject("message");
@@ -91,12 +95,13 @@ onMounted(() => {
   input.value.focus();
 });
 
+//if you want to read from dom before it is updated then beforeupate is usefull as it alllow us to change but the dom updates
 onBeforeUpdate(() => {
   console.log("App component is before update");
 });
 
 onUpdated(() => {
-  console.log("App component is before unmount");
+  console.log("App component is updated");
 });
 </script>
 
