@@ -32,6 +32,7 @@ import {
   onMounted,
   onUpdated,
   ref,
+  watch,
 } from "vue";
 import ComponentC from "./ComponentC";
 
@@ -69,6 +70,31 @@ function changeWizard() {
     },
   };
 }
+
+// ------> Watchers
+// watch(
+//   () => wizard.value.name,
+//   (newValue, oldValue) => {
+//     console.log("wizard's array's name is being watched", newValue, oldValue);
+//   },
+//   { immediate: true }
+// );
+
+watch(
+  wizard,
+  (newValue, oldValue) => {
+    console.log("wizard's array's name is being watched", newValue, oldValue);
+  },
+  { deep: true }
+);
+
+watch(
+  wizard,
+  () => {
+    localStorage.setItem("wizardStorage", JSON.stringify(wizard.value));
+  },
+  { deep: true }
+);
 
 let wizards = ref(["Harry", "Hermione", "Ron"]);
 
@@ -113,7 +139,7 @@ div {
 
 .card {
   background-color: lavenderblush;
-  color: white;
+  color: rgb(0, 0, 0);
   padding: 20px 10px;
   margin-bottom: 10px;
 }
